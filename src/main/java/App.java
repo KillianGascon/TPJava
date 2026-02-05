@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class App {
 
     public static void main(String[] args) {
@@ -73,6 +75,31 @@ public class App {
 
             System.out.println(bookByAutor.getTitre());
             System.out.println(bookByAutor.getAuteur());
+
+//            Supprimer un livre de votre choix en base de données
+
+            em.getTransaction().begin();
+
+            Book bookASupprimer = em.find(Book.class, 1);
+            if (bookASupprimer != null) {
+                em.remove(bookASupprimer);
+            }
+
+            em.getTransaction().commit();
+
+//            Afficher la liste de tous les livres présents en base de données (titre et auteur).
+
+            List<Book> books = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+            System.out.println("__________________________");
+            if (books != null) {
+                for (Book book : books) {
+                    System.out.println(book.getId());
+                    System.out.println(book.getTitre());
+                    System.out.println(book.getAuteur());
+                    System.out.println("__________________________");
+                }
+            }
+
         }
     }
 }
