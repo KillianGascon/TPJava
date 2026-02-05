@@ -1,4 +1,4 @@
-import fr.epsi.b32526.Person;
+import fr.epsi.b32526.Book;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -7,29 +7,17 @@ public class App {
 
     public static void main(String[] args) {
 
-        try (EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
-             EntityManager em = emf.createEntityManager();
-        ) {
-            //CRUD -> C -> Création d'une nouvelle instance
+        try (EntityManagerFactory emf =
+                     Persistence.createEntityManagerFactory("pu");
+             EntityManager em = emf.createEntityManager()) {
 
-            Book person = new Person("Killian", "Gascon", 20);
-            em.persist(person);
+            Book book = em.find(Book.class, 1);
 
-            //CRUD -> R -> Récupération d'une instance
-
-            Person personAModifier = em.find(Person.class, 1);
-            if(personAModifier != null){
-                personAModifier.setName("Fiona");
+            if (book != null) {
+                System.out.println(book.getTitre());
+                System.out.println(book.getAuteur());
             }
-
-            //CRUD -> U -> Mise à jour d'une instance
-            Person fiona = em.find(Person.class, 1);
-            if(fiona != null){
-                em.remove(fiona);
-            }
-
-            System.out.println(person.getId());
-            em.getTransaction().commit();
         }
     }
 }
+
