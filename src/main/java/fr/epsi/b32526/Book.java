@@ -20,18 +20,13 @@ public class Book implements Serializable {
     public Book() {
     }
 
-    public Book(Integer id, String titre, String auteur) {
-        this.id = id;
+    public Book(String titre, String auteur) {
         this.titre = titre;
         this.auteur = auteur;
     }
 
     public Integer getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitre() {
