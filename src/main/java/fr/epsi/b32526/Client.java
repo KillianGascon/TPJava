@@ -47,4 +47,12 @@ public class Client implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public Set<Emprunt> getEmprunts() {
+        return emprunts;
+    }
+
+    public void setEmprunts(Set<Emprunt> emprunts) {
+        this.emprunts = emprunts;
+    }
 }
