@@ -1,11 +1,13 @@
+import fr.epsi.b32526.Client;
 import fr.epsi.b32526.Emprunt;
 import fr.epsi.b32526.Livre;
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.TypedQuery;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.Set;
 
 public class TestBibliotheque {
 
@@ -20,8 +22,8 @@ public class TestBibliotheque {
             Emprunt emprunt = em.find(Emprunt.class, 1);
 
             if (emprunt != null) {
-                Date DateDebut = emprunt.getDate_debut();
-                Date DateFin = emprunt.getDate_fin();
+                LocalDate DateDebut = emprunt.getDateDebut();
+                LocalDate DateFin = emprunt.getDateFin();
                 for (Livre livre : emprunt.getLivres()) {
                     System.out.println(livre.getTitre());
                 }
@@ -34,11 +36,36 @@ public class TestBibliotheque {
             Emprunt GetClientEmprunt = em.find(Emprunt.class, 1);
 
             if (emprunt != null) {
-                System.out.println(emprunt.getDate_debut());
-                System.out.println(emprunt.getDate_fin());
+                System.out.println(emprunt.getDateDebut());
+                System.out.println(emprunt.getDateFin());
                 System.out.println(emprunt.getClient().getNom());
                 System.out.println(emprunt.getClient().getPrenom());
             }
+
+            em.getTransaction().begin();
+
+            Client ajoutClient = new Client("Dupont", "Jean");
+
+
+            Livre getLivre2 = em.find(Livre.class, 2);
+
+            if (getLivre2 != null) {
+
+                Emprunt nouvelEmprunt = new Emprunt(
+                        LocalDate.now(),
+                        LocalDate.now().plusDays(14),
+                        14,
+                        ajoutClient,
+                        Set.of(getLivre2)
+                );
+
+                ajoutClient.getEmprunts().add(nouvelEmprunt);
+
+                em.persist(ajoutClient);
+                em.getTransaction().commit();
+            }
+
+
 
         }
     }

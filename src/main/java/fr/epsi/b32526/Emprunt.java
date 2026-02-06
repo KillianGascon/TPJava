@@ -3,27 +3,28 @@ package fr.epsi.b32526;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name="emprunt")
+@Table(name = "Emprunt")
 public class Emprunt implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     private Integer id;
-    @Column(name="date_debut")
-    private Date date_debut;
-    @Column(name="date_fin")
-    private Date date_fin;
-    @Column(name="delai")
+    @Column(name = "date_debut")
+    private LocalDate dateDebut;
+    @Column(name = "date_fin")
+    private LocalDate dateFin;
+    @Column(name = "delai")
     private Integer delai;
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
-    @ManyToMany
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "compo",
             joinColumns = @JoinColumn(name = "id_emp"),
@@ -34,9 +35,9 @@ public class Emprunt implements Serializable {
     public Emprunt() {
     }
 
-    public Emprunt(Date date_debut, Date date_fin, Integer delai, Client client, Set<Livre> livres) {
-        this.date_debut = date_debut;
-        this.date_fin = date_fin;
+    public Emprunt(LocalDate dateDebut, LocalDate dateFin, Integer delai, Client client, Set<Livre> livres) {
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
         this.delai = delai;
         this.client = client;
         this.livres = livres;
@@ -47,20 +48,20 @@ public class Emprunt implements Serializable {
         return id;
     }
 
-    public Date getDate_debut() {
-        return date_debut;
+    public LocalDate getDateDebut() {
+        return dateDebut;
     }
 
-    public void setDate_debut(Date date_debut) {
-        this.date_debut = date_debut;
+    public void setDateDebut(LocalDate date_debut) {
+        this.dateDebut = date_debut;
     }
 
-    public Date getDate_fin() {
-        return date_fin;
+    public LocalDate getDateFin() {
+        return dateFin;
     }
 
-    public void setDate_fin(Date date_fin) {
-        this.date_fin = date_fin;
+    public void setDateFin(LocalDate date_fin) {
+        this.dateFin = date_fin;
     }
 
     public Integer getDelai() {
@@ -76,7 +77,15 @@ public class Emprunt implements Serializable {
     }
 
     public void setClient(Client client) {
+        if (this.client != null) {
+            this.client.getEmprunts().remove(this);
+        }
+
         this.client = client;
+
+        if (this.client != null) {
+            this.client.getEmprunts().add(this);
+        }
     }
 
     public Set<Livre> getLivres() {
@@ -86,4 +95,6 @@ public class Emprunt implements Serializable {
     public void setLivres(Set<Livre> livres) {
         this.livres = livres;
     }
+
+
 }

@@ -3,6 +3,7 @@ package fr.epsi.b32526;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -17,8 +18,10 @@ public class Client implements Serializable {
     private String nom;
     @Column(name="prenom")
     private String prenom;
-    @OneToMany(mappedBy = "client")
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Emprunt> emprunts;
+    {emprunts = new HashSet<>();}
+
 
     public Client() {
     }
@@ -54,5 +57,17 @@ public class Client implements Serializable {
 
     public void setEmprunts(Set<Emprunt> emprunts) {
         this.emprunts = emprunts;
+    }
+
+    public void addEmprunt(Emprunt emprunt) {
+        if (emprunt != null){
+            emprunt.setClient(this);
+        }
+    }
+
+    public void removeEmprunt(Emprunt emprunt) {
+        if (emprunt != null){
+            emprunt.setClient(null);
+        }
     }
 }

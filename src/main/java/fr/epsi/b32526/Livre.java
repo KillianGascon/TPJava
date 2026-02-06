@@ -13,7 +13,7 @@ public class Livre implements Serializable {
     @Column(name="id")
     private Integer id;
     @Column(name="titre")
-        private String titre;
+    private String titre;
     @Column(name="auteur")
     private String auteur;
 
