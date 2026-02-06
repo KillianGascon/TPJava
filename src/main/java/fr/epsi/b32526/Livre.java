@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name="livre")
-public class Book implements Serializable {
+public class Livre implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +17,10 @@ public class Book implements Serializable {
     @Column(name="auteur")
     private String auteur;
 
-    public Book() {
+    public Livre() {
     }
 
-    public Book(String titre, String auteur) {
+    public Livre(String titre, String auteur) {
         this.titre = titre;
         this.auteur = auteur;
     }

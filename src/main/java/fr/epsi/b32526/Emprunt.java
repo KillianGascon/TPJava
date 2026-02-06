@@ -3,7 +3,6 @@ package fr.epsi.b32526;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -26,16 +25,15 @@ public class Emprunt implements Serializable {
     @ManyToMany
     @JoinTable(
             name = "compo",
-            joinColumns = @JoinColumn(name = "id_emprunt"),
-            inverseJoinColumns = @JoinColumn(name = "id_livre")
+            joinColumns = @JoinColumn(name = "id_emp"),
+            inverseJoinColumns = @JoinColumn(name = "id_liv")
     )
-    private Set<Book> livres = new HashSet<>();
-
+    private Set<Livre> livres;
 
     public Emprunt() {
     }
 
-    public Emprunt(String date_debut, String date_fin, Integer delai, Client client, Set<Book> livres) {
+    public Emprunt(String date_debut, String date_fin, Integer delai, Client client, Set<Livre> livres) {
         this.date_debut = date_debut;
         this.date_fin = date_fin;
         this.delai = delai;
@@ -80,11 +78,11 @@ public class Emprunt implements Serializable {
         this.client = client;
     }
 
-    public Set<Book> getLivres() {
+    public Set<Livre> getLivres() {
         return livres;
     }
 
-    public void setLivres(Set<Book> livres) {
+    public void setLivres(Set<Livre> livres) {
         this.livres = livres;
     }
 }

@@ -1,4 +1,4 @@
-import fr.epsi.b32526.Book;
+import fr.epsi.b32526.Livre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -17,7 +17,7 @@ public class App {
 //            Réaliser un « find » simple permettant d’extraire un livre en fonction de son identifiant et affichez son
 //            titre et son auteur
 
-            Book Getbook = em.find(Book.class, 1);
+            Livre Getbook = em.find(Livre.class, 1);
 
             if (Getbook != null) {
                 System.out.println(Getbook.getTitre());
@@ -40,7 +40,7 @@ public class App {
 
             em.getTransaction().begin();
 
-            Book bookAModifier = em.find(Book.class, 5);
+            Livre bookAModifier = em.find(Livre.class, 5);
             if (bookAModifier != null) {
                 bookAModifier.setTitre("Du plaisir dans la cuisine");
             }
@@ -50,28 +50,28 @@ public class App {
 
 //            Faire une requête JPQL pour extraire de la base un livre en fonction de son titre
 
-            TypedQuery<Book> query = em.createQuery(
-                    "SELECT b FROM Book b WHERE b.titre = :titre",
-                    Book.class
+            TypedQuery<Livre> query = em.createQuery(
+                    "SELECT b FROM Livre b WHERE b.titre = :titre",
+                    Livre.class
             );
 
             query.setParameter("titre", "Divergente");
 
-            Book bookByTitle = query.getSingleResult();
+            Livre bookByTitle = query.getSingleResult();
 
             System.out.println(bookByTitle.getTitre());
             System.out.println(bookByTitle.getAuteur());
 
 //            Faire une requête JPQL pour extraire de la base un livre en fonction de son auteur
 
-            TypedQuery<Book> query2 = em.createQuery(
-                    "SELECT b FROM Book b WHERE b.auteur = :auteur",
-                    Book.class
+            TypedQuery<Livre> query2 = em.createQuery(
+                    "SELECT b FROM Livre b WHERE b.auteur = :auteur",
+                    Livre.class
             );
 
             query2.setParameter("auteur", "Veronica Roth");
 
-            Book bookByAutor = query2.getSingleResult();
+            Livre bookByAutor = query2.getSingleResult();
 
             System.out.println(bookByAutor.getTitre());
             System.out.println(bookByAutor.getAuteur());
@@ -80,7 +80,7 @@ public class App {
 
             em.getTransaction().begin();
 
-            Book bookASupprimer = em.find(Book.class, 1);
+            Livre bookASupprimer = em.find(Livre.class, 1);
             if (bookASupprimer != null) {
                 em.remove(bookASupprimer);
             }
@@ -89,10 +89,10 @@ public class App {
 
 //            Afficher la liste de tous les livres présents en base de données (titre et auteur).
 
-            List<Book> books = em.createQuery("SELECT b FROM Book b", Book.class).getResultList();
+            List<Livre> books = em.createQuery("SELECT b FROM Livre b", Livre.class).getResultList();
             System.out.println("__________________________");
             if (books != null) {
-                for (Book book : books) {
+                for (Livre book : books) {
                     System.out.println(book.getId());
                     System.out.println(book.getTitre());
                     System.out.println(book.getAuteur());

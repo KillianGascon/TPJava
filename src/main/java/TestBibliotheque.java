@@ -1,5 +1,5 @@
-import fr.epsi.b32526.Book;
 import fr.epsi.b32526.Emprunt;
+import fr.epsi.b32526.Livre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,15 +14,27 @@ public class TestBibliotheque {
 
 //        Réalisez une requête qui permet d’extraire un emprunt et tous ses livres associés
 
-            Emprunt GetEmprunt = em.find(Emprunt.class, 1);
+            Emprunt emprunt = em.find(Emprunt.class, 1);
 
-            if (GetEmprunt != null) {
-                System.out.println(GetEmprunt.getDate_debut());
-                System.out.println(GetEmprunt.getDate_fin());
-                System.out.println(GetEmprunt.getClient());
+            if (emprunt != null) {
+                System.out.println(emprunt.getDate_debut());
+                System.out.println(emprunt.getDate_fin());
+
+                for (Livre livre : emprunt.getLivres()) {
+                    System.out.println(livre.getTitre());
+                }
             }
 
 //            Réalisez une requête qui permet d’extraire tous les emprunts d’un client donné
+
+            Emprunt GetClientEmprunt = em.find(Emprunt.class, 1);
+
+            if (emprunt != null) {
+                System.out.println(emprunt.getDate_debut());
+                System.out.println(emprunt.getDate_fin());
+                System.out.println(emprunt.getClient().getNom());
+                System.out.println(emprunt.getClient().getPrenom());
+            }
 
         }
     }
