@@ -3,6 +3,7 @@ import fr.epsi.b32526.Livre;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 import java.util.Date;
 
